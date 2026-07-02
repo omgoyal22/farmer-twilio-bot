@@ -14,7 +14,7 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "").strip()
 # ============ Twilio ============
 TWILIO_ACCOUNT_SID=os.getenv("TWILIO_ACCOUNT_SID", "").strip()
 TWILIO_AUTH_TOKEN=os.getenv("TWILIO_AUTH_TOKEN", "").strip()
-TWILIO_PHONE_NUMBER=""
+TWILIO_PHONE_NUMBER=os.getenv("TWILIO_PHONE_NUMBER", "").strip()
 
 
 # ============ Domain / URLs ============
