@@ -74,7 +74,12 @@ async def twiml_outbound(request: Request):
     Reads the greeting message from in-memory store using CallSid.
     """
     # Parse form data from Twilio's POST
-    form_data = await request.form()
+    form_data = {}
+    try:
+        form_data = await request.form()
+    except Exception as e:
+        print(f"Error parsing form data: {e}")
+        
     call_sid = form_data.get("CallSid") or request.query_params.get("CallSid")
     print(f"TwiML for CallSid: {call_sid}")
 
