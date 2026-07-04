@@ -18,7 +18,9 @@ TWILIO_PHONE_NUMBER=os.getenv("TWILIO_PHONE_NUMBER", "").strip()
 
 
 # ============ Domain / URLs ============
-DOMAIN = os.getenv("DOMAIN", "")
+DOMAIN = os.getenv("DOMAIN", "").strip()
+if DOMAIN.endswith("/"):
+    DOMAIN = DOMAIN[:-1]
 DOMAIN_CLEAN = DOMAIN.replace("https://", "").replace("http://", "")
 WS_URL = f"wss://{DOMAIN_CLEAN}/ws/"
 

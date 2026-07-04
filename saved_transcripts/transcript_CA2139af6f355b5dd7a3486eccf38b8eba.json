@@ -1,0 +1,12 @@
+[
+    {
+        "speaker": "system",
+        "text": "Call connected",
+        "type": "call_start"
+    },
+    {
+        "speaker": "system",
+        "text": "Call ended",
+        "type": "call_end"
+    }
+]
