@@ -12,9 +12,10 @@ ConversationRelay Protocol:
 import json
 import asyncio
 from fastapi import WebSocket, WebSocketDisconnect
-from models import sessions, call_metadata
+from models import sessions, call_metadata, outbound_messages
 from gemini_handler import gemini_response, get_gemini_model
 from transcript import append_transcript, save_transcript_to_file
+from config import WELCOME_GREETING
 
 
 async def websocket_handler(websocket: WebSocket):
@@ -68,7 +69,15 @@ async def websocket_handler(websocket: WebSocket):
                     else:
                         model = get_gemini_model(**meta)
                         
-                    chat_session = model.start_chat(history=[])
+                    # Initialize chat history with the welcome greeting to prevent Gemini from repeating it
+                    greeting_text = outbound_messages.get(call_sid, WELCOME_GREETING)
+                    initial_history = [
+                        {
+                            "role": "model",
+                            "parts": [{"text": greeting_text}]
+                        }
+                    ]
+                    chat_session = model.start_chat(history=initial_history)
                     sessions[call_sid] = {"model": model, "chat": chat_session}
                     
                     await append_transcript(call_sid, "system", "Call connected", "call_start")

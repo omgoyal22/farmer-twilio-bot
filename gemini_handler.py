@@ -2,6 +2,7 @@
 Gemini AI Handler — System prompt, model initialization, response generation.
 Converted from the original Django code to work with FastAPI.
 """
+import os
 import re
 import json
 import asyncio
@@ -111,7 +112,7 @@ def get_gemini_model(farmer_name):
     farmer_info = get_farmer_info(farmer_name)
 
     model = genai.GenerativeModel(
-        model_name='gemini-2.5-flash',
+        model_name=os.getenv("GEMINI_MODEL", "gemini-3.5-flash").strip(),
         system_instruction=information_extract(**farmer_info),
         generation_config=generation_config
     )
